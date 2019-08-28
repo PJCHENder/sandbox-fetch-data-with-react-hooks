@@ -16,7 +16,6 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setQuery("react");
       const response = await axios.get(
         `https://hn.algolia.com/api/v1/search?query=${query}`
       );
@@ -33,7 +32,13 @@ function App() {
       <h1>Fetch data with React Hooks</h1>
       <div className="pure-form">
         <div className="pure-control-group">
-          <input type="text" className="pure-input-rounded" />
+          <input
+            type="text"
+            className="pure-input-rounded"
+            onChange={e => {
+              setQuery(e.target.value);
+            }}
+          />
           <button type="button" className="pure-button button-small">
             Search
           </button>
