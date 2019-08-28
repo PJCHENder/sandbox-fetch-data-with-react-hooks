@@ -1,0 +1,9 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 60px;
+}
+
+.pure-input-rounded {
+  margin-right: 15px;
+}
