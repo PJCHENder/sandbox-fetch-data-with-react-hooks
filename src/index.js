@@ -17,14 +17,21 @@ function App() {
     hits: []
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await axios.get(fetchUrl);
-      setData({
-        hits: response.data.hits
-      });
+      setIsError(false);
+      try {
+        const response = await axios.get(fetchUrl);
+        setData({
+          hits: response.data.hits
+        });
+      } catch (error) {
+        setIsError(true);
+      }
+
       setIsLoading(false);
     };
 
@@ -56,6 +63,8 @@ function App() {
           </button>
         </div>
       </div>
+
+      {isError && <p>Something went wrong...</p>}
 
       {isLoading ? (
         <p>Loading...</p>
