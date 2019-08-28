@@ -10,7 +10,12 @@ import useFetchData from "./useFetchData";
 
 function App() {
   const [query, setQuery] = useState("");
-  const [{ data, isLoading, isError }, setFetchUrl] = useFetchData({ query });
+  const [{ data, isLoading, isError }, setFetchUrl] = useFetchData({
+    initialData: {
+      hits: []
+    },
+    initialFetchUrl: "https://hn.algolia.com/api/v1/search"
+  });
 
   return (
     <div className="App ">
@@ -48,7 +53,7 @@ function App() {
                 .filter(hit => hit.title)
                 .map(hit => (
                   <li className="pure-menu-item" key={hit.objectID}>
-                    <a href={hit.url} class="pure-menu-link">
+                    <a href={hit.url} className="pure-menu-link">
                       {hit.title}
                     </a>
                   </li>
