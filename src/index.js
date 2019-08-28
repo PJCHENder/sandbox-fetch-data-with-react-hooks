@@ -10,22 +10,23 @@ import './styles.css';
 
 function App() {
   const [query, setQuery] = useState("");
+  const [fetchUrl, setFetchUrl] = useState(
+    "https://hn.algolia.com/api/v1/search"
+  );
   const [data, setData] = useState({
     hits: []
   });
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `https://hn.algolia.com/api/v1/search?query=${query}`
-      );
+      const response = await axios.get(fetchUrl);
       setData({
         hits: response.data.hits
       });
     };
 
     fetchData();
-  }, [query]);
+  }, [fetchUrl]);
 
   return (
     <div className="App ">
@@ -39,7 +40,15 @@ function App() {
               setQuery(e.target.value);
             }}
           />
-          <button type="button" className="pure-button button-small">
+          <button
+            type="button"
+            className="pure-button button-small"
+            onClick={() => {
+              setFetchUrl(
+                `https://hn.algolia.com/api/v1/search?query=${query}`
+              );
+            }}
+          >
             Search
           </button>
         </div>
@@ -50,7 +59,7 @@ function App() {
             data.hits
               .filter(hit => hit.title)
               .map(hit => (
-                <li className="pure-menu-item">
+                <li className="pure-menu-item" key={hit.objectID}>
                   <a href={hit.url} class="pure-menu-link">
                     {hit.title}
                   </a>
