@@ -2,31 +2,37 @@
  * https://www.robinwieruch.de/react-hooks-fetch-data
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
 
 function App() {
   const [data, setData] = useState({
-    hits: [
-      {
-        objectID: 1,
-        title: "Hello React",
-        url: "https://www.google.com"
-      },
-      {
-        objectID: 2,
-        title: "Hello React Hooks",
-        url: "https://www.google.com"
-      },
-      {
-        objectID: 3,
-        title: "Hello Sandbox",
-        url: "https://www.google.com"
-      }
-    ]
+    hits: []
   });
+
+  useEffect(() => {
+    setData({
+      hits: [
+        {
+          objectID: 1,
+          title: "Hello React",
+          url: "https://www.google.com"
+        },
+        {
+          objectID: 2,
+          title: "Hello React Hooks",
+          url: "https://www.google.com"
+        },
+        {
+          objectID: 3,
+          title: "Hello Sandbox",
+          url: "https://www.google.com"
+        }
+      ]
+    });
+  }, []);
 
   return (
     <div className="App ">
