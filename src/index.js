@@ -9,14 +9,16 @@ import axios from "axios";
 import "./styles.css";
 
 function App() {
+  const [query, setQuery] = useState("");
   const [data, setData] = useState({
     hits: []
   });
 
   useEffect(() => {
     const fetchData = async () => {
+      setQuery("react");
       const response = await axios.get(
-        "https://hn.algolia.com/api/v1/search?query=redux"
+        `https://hn.algolia.com/api/v1/search?query=${query}`
       );
       setData({
         hits: response.data.hits
@@ -24,7 +26,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [query]);
 
   return (
     <div className="App ">
@@ -39,13 +41,16 @@ function App() {
       </div>
       <div className="pure-menu">
         <ul className="pure-menu-list">
-          {data.hits.map(hit => (
-            <li className="pure-menu-item">
-              <a href={hit.url} class="pure-menu-link">
-                {hit.title}
-              </a>
-            </li>
-          ))}
+          {Array.isArray(data.hits) &&
+            data.hits
+              .filter(hit => hit.title)
+              .map(hit => (
+                <li className="pure-menu-item">
+                  <a href={hit.url} class="pure-menu-link">
+                    {hit.title}
+                  </a>
+                </li>
+              ))}
         </ul>
       </div>
     </div>
