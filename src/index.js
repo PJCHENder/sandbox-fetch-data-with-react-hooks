@@ -41,7 +41,13 @@ function App() {
   return (
     <div className="App ">
       <h1>Fetch data with React Hooks</h1>
-      <div className="pure-form">
+      <form
+        className="pure-form"
+        onSubmit={e => {
+          e.preventDefault();
+          setFetchUrl(`https://hn.algolia.com/api/v1/search?query=${query}`);
+        }}
+      >
         <div className="pure-control-group">
           <input
             type="text"
@@ -50,19 +56,11 @@ function App() {
               setQuery(e.target.value);
             }}
           />
-          <button
-            type="button"
-            className="pure-button button-small"
-            onClick={() => {
-              setFetchUrl(
-                `https://hn.algolia.com/api/v1/search?query=${query}`
-              );
-            }}
-          >
+          <button type="submit" className="pure-button button-small">
             Search
           </button>
         </div>
-      </div>
+      </form>
 
       {isError && <p>Something went wrong...</p>}
 
