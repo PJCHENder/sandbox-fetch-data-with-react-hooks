@@ -16,13 +16,16 @@ function App() {
   const [data, setData] = useState({
     hits: []
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const response = await axios.get(fetchUrl);
       setData({
         hits: response.data.hits
       });
+      setIsLoading(false);
     };
 
     fetchData();
@@ -53,20 +56,25 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="pure-menu">
-        <ul className="pure-menu-list">
-          {Array.isArray(data.hits) &&
-            data.hits
-              .filter(hit => hit.title)
-              .map(hit => (
-                <li className="pure-menu-item" key={hit.objectID}>
-                  <a href={hit.url} class="pure-menu-link">
-                    {hit.title}
-                  </a>
-                </li>
-              ))}
-        </ul>
-      </div>
+
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="pure-menu">
+          <ul className="pure-menu-list">
+            {Array.isArray(data.hits) &&
+              data.hits
+                .filter(hit => hit.title)
+                .map(hit => (
+                  <li className="pure-menu-item" key={hit.objectID}>
+                    <a href={hit.url} class="pure-menu-link">
+                      {hit.title}
+                    </a>
+                  </li>
+                ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
