@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
 
 import './styles.css';
 
@@ -13,25 +14,16 @@ function App() {
   });
 
   useEffect(() => {
-    setData({
-      hits: [
-        {
-          objectID: 1,
-          title: "Hello React",
-          url: "https://www.google.com"
-        },
-        {
-          objectID: 2,
-          title: "Hello React Hooks",
-          url: "https://www.google.com"
-        },
-        {
-          objectID: 3,
-          title: "Hello Sandbox",
-          url: "https://www.google.com"
-        }
-      ]
-    });
+    const fetchData = async () => {
+      const response = await axios.get(
+        "https://hn.algolia.com/api/v1/search?query=redux"
+      );
+      setData({
+        hits: response.data.hits
+      });
+    };
+
+    fetchData();
   }, []);
 
   return (
