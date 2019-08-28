@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useFetchData = () => {
-  const [fetchUrl, setFetchUrl] = useState(
-    `https://hn.algolia.com/api/v1/search`
-  );
-  const [data, setData] = useState({
-    hits: []
-  });
+const useFetchData = ({ initialData, initialFetchUrl }) => {
+  const [fetchUrl, setFetchUrl] = useState(initialFetchUrl);
+  const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
